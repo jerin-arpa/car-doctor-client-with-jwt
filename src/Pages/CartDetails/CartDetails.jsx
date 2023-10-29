@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import checkout from '../../assets/images/checkout/checkout.png';
 import { AuthContext } from '../../Providers/AuthProvider';
 import CartRow from './CartRow';
+import axios from 'axios';
 
 const CartDetails = () => {
 
@@ -11,9 +12,15 @@ const CartDetails = () => {
     const url = `http://localhost:5000/bookings?email=${user?.email}`;
 
     useEffect(() => {
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setBookings(data));
+        axios.get(url, { withCredentials: true })
+            .then(res => {
+                setBookings(res.data);
+            })
+
+
+        // fetch(url)
+        //     .then(res => res.json())
+        //     .then(data => setBookings(data));
     }, [url]);
 
 
